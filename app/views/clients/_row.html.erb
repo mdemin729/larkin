@@ -1,0 +1,7 @@
+<tr>
+  <td><%= client.name %></td>
+  <td><%= client.address %>, <%= client.city %>, <%= client.state %> <%= client.zip %></td>
+  <td><%= client.phone_number %> <%= client.phone_ext.nil? ? '' : 'x' + client.phone_ext %></td>
+  <td><%= link_to 'Show', client_path(client) %></td>
+  <td><%= link_to 'Edit', edit_client_path(client) %></td>
+</tr>
