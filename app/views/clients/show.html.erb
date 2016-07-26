@@ -20,15 +20,6 @@
     <%= f.static_control :address %>
     <%= f.static_control :city %>
     <%= f.static_control :zip %>
-    <%= f.static_control :phone_number, control_col: 'col-sm-4' %>
-    <%= f.static_control :phone_ext, control_col: 'col-sm-4'  %>
-<% end %>
-
-<%= bootstrap_form_for(@client, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10') do |f| %>
-    <%= f.static_control :name %>
-    <%= f.static_control :address %>
-    <%= f.static_control :city %>
-    <%= f.text_field :zip %>
-    <%= f.text_field :phone_number, control_col: 'col-sm-4' %>
-    <%= f.text_field :phone_ext, control_col: 'col-sm-4'  %>
+    <%= f.static_control :phone_number%>
+    <%= f.static_control :phone_ext%>
 <% end %>
