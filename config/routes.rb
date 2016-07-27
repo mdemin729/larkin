@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :csv_imports
   resources :orders
   resources :clients
   # The priority is based upon order of creation: first created -> highest priority.
