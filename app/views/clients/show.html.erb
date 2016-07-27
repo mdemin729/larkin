@@ -20,6 +20,11 @@
     <%= f.static_control :address %>
     <%= f.static_control :city %>
     <%= f.static_control :zip %>
-    <%= f.static_control :phone_number%>
-    <%= f.static_control :phone_ext%>
+    <%= f.static_control :phone_number %>
+    <%= f.static_control :phone_ext %>
+    <%= link_to 'Edit', edit_client_path(@client), class: 'btn btn-default' %>
+    <%= link_to 'Destroy', client_path(@client),
+                method: :delete,
+                data: { confirm: 'Are you sure?' },
+                class: 'btn btn-default' %>
 <% end %>
