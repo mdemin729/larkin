@@ -1,9 +1,15 @@
-<p id="notice"><%= notice %></p>
+<h1>CSV import</h1>
+<% if @notice %>
+    <div id="notice" class="alert alert-success" role="alert"><%= notice %></div>
+<% end %>
 
 <p>
-  <strong>Csv:</strong>
-  <%= @csv_import.csv %>
+  <%= link_to 'Download source file', @csv_import.csv_url %>
 </p>
 
-<%= link_to 'Edit', edit_csv_import_path(@csv_import) %> |
-<%= link_to 'Back', csv_imports_path %>
+<%= bootstrap_form_for(@csv_import, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10') do |f| %>
+    <%= f.static_control :csv_identifier, label: 'File' %>
+    <%= f.static_control :created_at %>
+    <%= link_to 'Back', csv_imports_path, class: 'btn btn-primary' %>
+<% end %>
+

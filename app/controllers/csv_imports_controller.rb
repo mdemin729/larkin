@@ -10,6 +10,7 @@ class CsvImportsController < ApplicationController
   # GET /csv_imports/1
   # GET /csv_imports/1.json
   def show
+    @csv_contents = @csv_import.csv.read
   end
 
   # GET /csv_imports/new
