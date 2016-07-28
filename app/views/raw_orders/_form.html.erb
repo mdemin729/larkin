@@ -1,0 +1,93 @@
+<%= form_for(@raw_order) do |f| %>
+  <% if @raw_order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@raw_order.errors.count, "error") %> prohibited this raw_order from being saved:</h2>
+
+      <ul>
+      <% @raw_order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :delivery_date %><br>
+    <%= f.text_field :delivery_date %>
+  </div>
+  <div class="field">
+    <%= f.label :delivery_shift %><br>
+    <%= f.text_field :delivery_shift %>
+  </div>
+  <div class="field">
+    <%= f.label :origin_name %><br>
+    <%= f.text_field :origin_name %>
+  </div>
+  <div class="field">
+    <%= f.label :origin_raw_line_1 %><br>
+    <%= f.text_field :origin_raw_line_1 %>
+  </div>
+  <div class="field">
+    <%= f.label :origin_city %><br>
+    <%= f.text_field :origin_city %>
+  </div>
+  <div class="field">
+    <%= f.label :origin_state %><br>
+    <%= f.text_field :origin_state %>
+  </div>
+  <div class="field">
+    <%= f.label :origin_zip %><br>
+    <%= f.text_field :origin_zip %>
+  </div>
+  <div class="field">
+    <%= f.label :client %><br>
+    <%= f.text_field :client %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :destination_raw_line_1 %><br>
+    <%= f.text_field :destination_raw_line_1 %>
+  </div>
+  <div class="field">
+    <%= f.label :destination_city %><br>
+    <%= f.text_field :destination_city %>
+  </div>
+  <div class="field">
+    <%= f.label :destination_state %><br>
+    <%= f.text_field :destination_state %>
+  </div>
+  <div class="field">
+    <%= f.label :destination_zip %><br>
+    <%= f.text_field :destination_zip %>
+  </div>
+  <div class="field">
+    <%= f.label :phone_number %><br>
+    <%= f.text_field :phone_number %>
+  </div>
+  <div class="field">
+    <%= f.label :mode %><br>
+    <%= f.text_field :mode %>
+  </div>
+  <div class="field">
+    <%= f.label :purchase_order_number %><br>
+    <%= f.text_field :purchase_order_number %>
+  </div>
+  <div class="field">
+    <%= f.label :volume %><br>
+    <%= f.text_field :volume %>
+  </div>
+  <div class="field">
+    <%= f.label :handling_unit_quantity %><br>
+    <%= f.text_field :handling_unit_quantity %>
+  </div>
+  <div class="field">
+    <%= f.label :handling_unit_type %><br>
+    <%= f.text_field :handling_unit_type %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

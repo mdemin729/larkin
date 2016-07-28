@@ -1,0 +1,99 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Delivery date:</strong>
+  <%= @raw_order.delivery_date %>
+</p>
+
+<p>
+  <strong>Delivery shift:</strong>
+  <%= @raw_order.delivery_shift %>
+</p>
+
+<p>
+  <strong>Origin name:</strong>
+  <%= @raw_order.origin_name %>
+</p>
+
+<p>
+  <strong>Origin raw line 1:</strong>
+  <%= @raw_order.origin_raw_line_1 %>
+</p>
+
+<p>
+  <strong>Origin city:</strong>
+  <%= @raw_order.origin_city %>
+</p>
+
+<p>
+  <strong>Origin state:</strong>
+  <%= @raw_order.origin_state %>
+</p>
+
+<p>
+  <strong>Origin zip:</strong>
+  <%= @raw_order.origin_zip %>
+</p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @raw_order.client %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @raw_order.name %>
+</p>
+
+<p>
+  <strong>Destination raw line 1:</strong>
+  <%= @raw_order.destination_raw_line_1 %>
+</p>
+
+<p>
+  <strong>Destination city:</strong>
+  <%= @raw_order.destination_city %>
+</p>
+
+<p>
+  <strong>Destination state:</strong>
+  <%= @raw_order.destination_state %>
+</p>
+
+<p>
+  <strong>Destination zip:</strong>
+  <%= @raw_order.destination_zip %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @raw_order.phone_number %>
+</p>
+
+<p>
+  <strong>Mode:</strong>
+  <%= @raw_order.mode %>
+</p>
+
+<p>
+  <strong>Purchase order number:</strong>
+  <%= @raw_order.purchase_order_number %>
+</p>
+
+<p>
+  <strong>Volume:</strong>
+  <%= @raw_order.volume %>
+</p>
+
+<p>
+  <strong>Handling unit quantity:</strong>
+  <%= @raw_order.handling_unit_quantity %>
+</p>
+
+<p>
+  <strong>Handling unit type:</strong>
+  <%= @raw_order.handling_unit_type %>
+</p>
+
+<%= link_to 'Edit', edit_raw_order_path(@raw_order) %> |
+<%= link_to 'Back', raw_orders_path %>

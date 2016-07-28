@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :raw_orders
   resources :csv_imports
   resources :orders
   resources :clients
