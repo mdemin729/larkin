@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160727184626) do
+ActiveRecord::Schema.define(version: 20160728100752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,9 +29,9 @@ ActiveRecord::Schema.define(version: 20160727184626) do
   end
 
   create_table "csv_imports", force: :cascade do |t|
-    t.text     "csv"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "csv",        limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "orders", force: :cascade do |t|
@@ -43,6 +43,35 @@ ActiveRecord::Schema.define(version: 20160727184626) do
   end
 
   add_index "orders", ["client_id"], name: "index_orders_on_client_id", using: :btree
+
+  create_table "raw_orders", force: :cascade do |t|
+    t.integer  "row_num"
+    t.string   "delivery_date"
+    t.string   "delivery_shift"
+    t.string   "origin_name"
+    t.string   "origin_raw_line_1"
+    t.string   "origin_city"
+    t.string   "origin_state"
+    t.string   "origin_zip"
+    t.string   "origin_country"
+    t.string   "client_name"
+    t.string   "destination_raw_line_1"
+    t.string   "destination_city"
+    t.string   "destination_state"
+    t.string   "destination_zip"
+    t.string   "destination_country"
+    t.string   "phone_number"
+    t.string   "mode"
+    t.string   "purchase_order_number"
+    t.string   "volume"
+    t.string   "handling_unit_quantity"
+    t.string   "handling_unit_type"
+    t.integer  "csv_import_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "raw_orders", ["csv_import_id"], name: "index_raw_orders_on_csv_import_id", using: :btree
 
   create_table "test_data", force: :cascade do |t|
     t.text    "delivery_date"
@@ -72,4 +101,5 @@ ActiveRecord::Schema.define(version: 20160727184626) do
   end
 
   add_foreign_key "orders", "clients"
+  add_foreign_key "raw_orders", "csv_imports"
 end

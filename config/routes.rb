@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
-  resources :raw_orders
-  resources :csv_imports
+  resources :csv_imports do
+    member do
+      post 'run'
+    end
+
+    resources :raw_orders
+  end
   resources :orders
   resources :clients
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,5 +1,7 @@
+require 'csv'
+
 class CsvImportsController < ApplicationController
-  before_action :set_csv_import, only: [:show, :edit, :update, :destroy]
+  before_action :set_csv_import, only: [:show, :edit, :update, :destroy, :run]
 
   # GET /csv_imports
   # GET /csv_imports.json
@@ -26,9 +28,9 @@ class CsvImportsController < ApplicationController
   # POST /csv_imports.json
   def create
     @csv_import = CsvImport.new(csv_import_params)
-
     respond_to do |format|
       if @csv_import.save
+        create_raw_orders
         format.html { redirect_to @csv_import, notice: 'Csv import was successfully created.' }
         format.json { render :show, status: :created, location: @csv_import }
       else
@@ -62,14 +64,44 @@ class CsvImportsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_csv_import
-      @csv_import = CsvImport.find(params[:id])
+  # Process uploaded CSV file
+  def run
+    @row_num = 0
+    @csv_contents = @csv_import.csv.read
+    CSV.parse @csv_contents, :headers => true do |row|
+      @row_num += 1
+      params = row.to_hash
+      params[:row_num] = @row_num
+      raw_order = RawOrder.new(params)
+      unless raw_order.valid?
+        print @row_num, ',', row.to_s
+        raw_order.errors.each do |attribute, error|
+          print "#{attribute}: #{error}\n"
+        end
+      end
     end
+    redirect_to @csv_import
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def csv_import_params
-      params.require(:csv_import).permit(:csv)
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_csv_import
+    @csv_import = CsvImport.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def csv_import_params
+    params.require(:csv_import).permit(:csv)
+  end
+
+  def create_raw_orders
+    @row_num = 0
+    @csv_contents = @csv_import.csv.read
+    CSV.parse @csv_contents, :headers => true do |row|
+      @row_num += 1
+      params = row.to_hash
+      params[:row_num] = @row_num
+      @csv_import.raw_orders.create(params)
     end
+  end
 end
