@@ -34,6 +34,7 @@
     <th>Destination country</th>
     <th>Phone number</th>
     <th>Mode</th>
+    <th>Purchase order number</th>
     <th>Volume</th>
     <th>Unit quantity</th>
     <th>Unit type</th>
@@ -41,8 +42,8 @@
   </thead>
 
   <tbody>
-  <% @csv_import.raw_orders.each do |raw_order| %>
-      <tr>
+  <% @raw_orders.each do |raw_order| %>
+      <tr class="<%= raw_order.invalid? ? 'danger' : '' %>">
         <td><%= raw_order.row_num %></td>
         <td><%= raw_order.delivery_date %></td>
         <td><%= raw_order.delivery_shift %></td>

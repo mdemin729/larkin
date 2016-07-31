@@ -6,13 +6,22 @@ class CsvImportsController < ApplicationController
   # GET /csv_imports
   # GET /csv_imports.json
   def index
-    @csv_imports = CsvImport.all
+    @csv_imports = CsvImport.order(created_at: :desc).all
   end
 
   # GET /csv_imports/1
   # GET /csv_imports/1.json
   def show
-    @csv_contents = @csv_import.csv.read
+    @raw_orders = @csv_import.raw_orders
+    @raw_orders = @raw_orders.sort do |row1, row2|
+      v1 = row1.valid? ? 1 : 0
+      v2 = row2.valid? ? 1 : 0
+      res = v1 <=> v2
+      if res == 0
+        res = row1.row_num <=> row2.row_num
+      end
+      res
+    end
   end
 
   # GET /csv_imports/new
@@ -28,14 +37,16 @@ class CsvImportsController < ApplicationController
   # POST /csv_imports.json
   def create
     @csv_import = CsvImport.new(csv_import_params)
-    respond_to do |format|
-      if @csv_import.save
-        create_raw_orders
-        format.html { redirect_to @csv_import, notice: 'Csv import was successfully created.' }
-        format.json { render :show, status: :created, location: @csv_import }
-      else
-        format.html { render :new }
-        format.json { render json: @csv_import.errors, status: :unprocessable_entity }
+    CsvImport.transaction do
+      respond_to do |format|
+        if @csv_import.save
+          create_raw_orders
+          format.html { redirect_to @csv_import, notice: 'Csv import was successfully created.' }
+          format.json { render :show, status: :created, location: @csv_import }
+        else
+          format.html { render :new }
+          format.json { render json: @csv_import.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -101,7 +112,10 @@ class CsvImportsController < ApplicationController
       @row_num += 1
       params = row.to_hash
       params[:row_num] = @row_num
-      @csv_import.raw_orders.create(params)
+      params[:csv_import] = @csv_import
+      raw_order = RawOrder.new(params)
+      raw_order.save! :validate => false
+      #@csv_import.raw_orders.add_to_target(raw_order)
     end
   end
 end
