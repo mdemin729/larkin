@@ -42,7 +42,7 @@ class RawOrdersController < ApplicationController
   def update
     respond_to do |format|
       if @raw_order.update(raw_order_params)
-        format.html { redirect_to @raw_order, notice: 'Raw order was successfully updated.' }
+        format.html { redirect_to @csv_import }
         format.json { render :show, status: :ok, location: @raw_order }
       else
         format.html { render :edit }
@@ -65,6 +65,8 @@ class RawOrdersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_raw_order
       @raw_order = RawOrder.find(params[:id])
+      @raw_order_fields = RawOrder.column_names - %w(id row_num csv_import created_at updated_at)
+      @csv_import = @raw_order.csv_import
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

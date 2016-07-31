@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
     resources :raw_orders
   end
+  resources :raw_orders
   resources :orders
   resources :clients
   # The priority is based upon order of creation: first created -> highest priority.

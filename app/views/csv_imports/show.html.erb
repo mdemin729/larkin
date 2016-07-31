@@ -17,7 +17,7 @@
 <table class="table table-hover table-condensed">
   <thead>
   <tr>
-    <th>N</th>
+    <th>Row N</th>
     <th>Delivery date</th>
     <th>Delivery shift</th>
     <th>Origin name</th>
@@ -44,7 +44,9 @@
   <tbody>
   <% @raw_orders.each do |raw_order| %>
       <tr>
-        <td class="<%= 'danger' if raw_order.invalid? %>"><%= raw_order.row_num %></td>
+        <td class="<%= 'danger' if raw_order.invalid? %>">
+          <%= link_to raw_order.row_num, raw_order_path(raw_order) %>
+        </td>
         <% @raw_order_fields.each do |field| %>
             <td class="<%= 'danger' if raw_order.errors[field].any? %>"><%= raw_order[field] %></td>
         <% end %>

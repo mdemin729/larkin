@@ -2,6 +2,14 @@ class RawOrder < ActiveRecord::Base
   belongs_to :csv_import
   validates :csv_import, presence: true
 
+  validate do |raw_order|
+    begin
+      delivery_date = Date.strptime raw_order.delivery_date, '%m/%d/%Y'
+    rescue ArgumentError
+      errors[:delivery_date] << 'Delivery date is invalid'
+    end
+  end
+
   validates_presence_of :delivery_date
   validates :delivery_shift, inclusion: {in: %w(M N E)}, allow_blank: true
 
