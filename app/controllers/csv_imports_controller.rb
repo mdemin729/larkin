@@ -22,6 +22,8 @@ class CsvImportsController < ApplicationController
       end
       res
     end
+
+    @raw_order_fields = RawOrder.column_names - %w(id row_num csv_import created_at updated_at)
   end
 
   # GET /csv_imports/new

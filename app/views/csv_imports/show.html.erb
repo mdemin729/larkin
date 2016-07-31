@@ -45,28 +45,13 @@
   <% @raw_orders.each do |raw_order| %>
       <tr>
         <td class="<%= 'danger' if raw_order.invalid? %>"><%= raw_order.row_num %></td>
-        <td class="<%= 'danger' if raw_order.errors[:delivery_date].any? %>"><%= raw_order.delivery_date %></td>
-        <td class="<%= 'danger' if raw_order.errors[:delivery_shift].any? %>"><%= raw_order.delivery_shift %></td>
-        <td class="<%= 'danger' if raw_order.errors[:origin_name].any? %>"><%= raw_order.origin_name %></td>
-        <td class="<%= 'danger' if raw_order.errors[:origin_raw_line_1].any? %>"><%= raw_order.origin_raw_line_1 %></td>
-        <td class="<%= 'danger' if raw_order.errors[:origin_city].any? %>"><%= raw_order.origin_city %></td>
-        <td class="<%= 'danger' if raw_order.errors[:origin_state].any? %>"><%= raw_order.origin_state %></td>
-        <td class="<%= 'danger' if raw_order.errors[:origin_zip].any? %>"><%= raw_order.origin_zip %></td>
-        <td class="<%= 'danger' if raw_order.errors[:origin_country].any? %>"><%= raw_order.origin_country %></td>
-        <td class="<%= 'danger' if raw_order.errors[:client_name].any? %>"><%= raw_order.client_name %></td>
-        <td class="<%= 'danger' if raw_order.errors[:destination_raw_line_1].any? %>"><%= raw_order.destination_raw_line_1 %></td>
-        <td class="<%= 'danger' if raw_order.errors[:destination_city].any? %>"><%= raw_order.destination_city %></td>
-        <td class="<%= 'danger' if raw_order.errors[:destination_state].any? %>"><%= raw_order.destination_state %></td>
-        <td class="<%= 'danger' if raw_order.errors[:destination_zip].any? %>"><%= raw_order.destination_zip %></td>
-        <td class="<%= 'danger' if raw_order.errors[:destination_country].any? %>"><%= raw_order.destination_country %></td>
-        <td class="<%= 'danger' if raw_order.errors[:phone_number].any? %>"><%= raw_order.phone_number %></td>
-        <td class="<%= 'danger' if raw_order.errors[:mode].any? %>"><%= raw_order.mode %></td>
-        <td class="<%= 'danger' if raw_order.errors[:purchase_order_number].any? %>"><%= raw_order.purchase_order_number %></td>
-        <td class="<%= 'danger' if raw_order.errors[:volume].any? %>"><%= raw_order.volume %></td>
-        <td class="<%= 'danger' if raw_order.errors[:handling_unit_quantity].any? %>"><%= raw_order.handling_unit_quantity %></td>
-        <td class="<%= 'danger' if raw_order.errors[:handling_unit_type].any? %>"><%= raw_order.handling_unit_type %></td>
+        <% @raw_order_fields.each do |field| %>
+            <td class="<%= 'danger' if raw_order.errors[field].any? %>"><%= raw_order[field] %></td>
+        <% end %>
       </tr>
   <% end %>
   </tbody>
+</table>
+
 </table>
 
