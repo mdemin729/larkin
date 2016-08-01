@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :orders
   resources :csv_imports do
     member do
       post 'run'
@@ -7,7 +8,6 @@ Rails.application.routes.draw do
     resources :raw_orders
   end
   resources :raw_orders
-  resources :orders
   resources :clients
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

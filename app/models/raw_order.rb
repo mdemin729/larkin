@@ -4,7 +4,7 @@ class RawOrder < ActiveRecord::Base
 
   validate do |raw_order|
     begin
-      delivery_date = Date.strptime raw_order.delivery_date, '%m/%d/%Y'
+      Date.strptime raw_order.delivery_date, '%m/%d/%Y' unless raw_order.delivery_date.nil?
     rescue ArgumentError
       errors[:delivery_date] << 'must be valid date in MM/DD/YYYY format'
     end
