@@ -12,7 +12,7 @@ class CsvImportsController < ApplicationController
   # GET /csv_imports/1
   # GET /csv_imports/1.json
   def show
-    @raw_orders = @csv_import.raw_orders
+    @raw_orders = RawOrder.includes(:order, :csv_import).where(:csv_import_id => @csv_import.id).all
     @raw_orders = @raw_orders.sort do |row1, row2|
       v1 = row1.valid? ? 1 : 0
       v2 = row2.valid? ? 1 : 0
@@ -83,8 +83,7 @@ class CsvImportsController < ApplicationController
     @raw_orders = RawOrder.where(csv_import_id: @csv_import.id).where('order_id IS NULL')
     @raw_orders.all.find_each do |ro|
       if ro.valid?
-        order_params = ro.attributes.to_hash
-        Order.new(order_params)
+        import_order(ro)
       end
     end
     redirect_to @csv_import
@@ -110,8 +109,24 @@ class CsvImportsController < ApplicationController
       params[:row_num] = @row_num
       params[:csv_import] = @csv_import
       raw_order = RawOrder.new(params)
-      raw_order.save! :validate => false
+      raw_order.save :validate => false
       #@csv_import.raw_orders.add_to_target(raw_order)
     end
+  end
+
+  def import_order(raw_order)
+    order = from_raw_order(raw_order)
+    raw_order.update :order_id => order.id
+  end
+
+  def from_raw_order(ro)
+    order_params = ro.attributes.to_hash
+    order_params.delete_if { |key, value| %w(id row_num created_at updated_at order_id csv_import_id).include? key }
+    order_params[:raw_order_id] = ro.id
+
+    order = Order.new(order_params)
+    order.save
+
+    order
   end
 end

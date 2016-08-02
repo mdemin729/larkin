@@ -1,5 +1,6 @@
 class RawOrder < ActiveRecord::Base
   belongs_to :csv_import
+  belongs_to :order
   validates :csv_import, presence: true
 
   validate do |raw_order|

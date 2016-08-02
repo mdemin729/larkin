@@ -44,9 +44,20 @@
   <tbody>
   <% @raw_orders.each do |raw_order| %>
       <tr>
-        <td class="<%= 'danger' if raw_order.invalid? %>">
-          <%= link_to raw_order.row_num,
-                      raw_order.invalid? ? edit_raw_order_path(raw_order) : raw_order_path(raw_order) %>
+        <% if raw_order.invalid? %>
+            <td class="danger">
+              <%= link_to raw_order.row_num, edit_raw_order_path(raw_order) %>
+            </td>
+        <% elsif !raw_order.order.nil? %>
+            <td class="success">
+              <%= link_to raw_order.row_num, order_path(raw_order.order) %> | <%= raw_order.order_id %>
+            </td>
+        <% else %>
+            <td>
+              <%= link_to raw_order.row_num, raw_order_path(raw_order) %>
+            </td>
+        <% end %>
+
         </td>
         <% @raw_order_fields.each do |field| %>
             <td class="<%= 'danger' if raw_order.errors[field].any? %>"><%= raw_order[field] %></td>
