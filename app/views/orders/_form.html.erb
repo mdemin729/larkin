@@ -1,17 +1,15 @@
-<%= form_for(@order) do |f| %>
-  <% if @order.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
-
-      <ul>
-      <% @order.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<% if @order.invalid? %>
+    <div class="alert alert-danger" role="alert">
+      <%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved
     </div>
-  <% end %>
+<% end %>
 
-  <div class="actions">
+<%= bootstrap_form_for(@order, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10') do |f| %>
+    <% @order_fields.each do |field| %>
+        <%= f.text_field field %>
+    <% end %>
+
     <%= f.submit %>
-  </div>
+    <%= link_to 'Show', order_path(@order), class: 'btn btn-default' %>
+    <%= link_to 'Back', orders_path, class: 'btn btn-primary' %>
 <% end %>

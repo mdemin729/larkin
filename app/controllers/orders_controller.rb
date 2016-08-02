@@ -10,7 +10,6 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
-    @order_fields = Order.column_names - %w(id created_at updated_at)
   end
 
   # GET /orders/new
@@ -66,10 +65,11 @@ class OrdersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_order
       @order = Order.find(params[:id])
+      @order_fields = Order.column_names - %w(id created_at updated_at)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.fetch(:order, {})
+      params.require(:order).permit(:delivery_date, :delivery_shift, :origin_name, :origin_raw_line_1, :origin_city, :origin_state, :origin_zip, :client, :name, :destination_raw_line_1, :destination_city, :destination_state, :destination_zip, :phone_number, :phone_ext, :mode, :purchase_order_number, :volume, :handling_unit_quantity, :handling_unit_type)
     end
 end
