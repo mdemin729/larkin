@@ -80,17 +80,11 @@ class CsvImportsController < ApplicationController
   # Process uploaded CSV file
   def run
     @row_num = 0
-    @csv_contents = @csv_import.csv.read
-    CSV.parse @csv_contents, :headers => true do |row|
-      @row_num += 1
-      params = row.to_hash
-      params[:row_num] = @row_num
-      raw_order = RawOrder.new(params)
-      unless raw_order.valid?
-        print @row_num, ',', row.to_s
-        raw_order.errors.each do |attribute, error|
-          print "#{attribute}: #{error}\n"
-        end
+    @raw_orders = RawOrder.where(csv_import_id: @csv_import.id).where('order_id IS NULL')
+    @raw_orders.all.find_each do |ro|
+      if ro.valid?
+        order_params = ro.attributes.to_hash
+        Order.new(order_params)
       end
     end
     redirect_to @csv_import
