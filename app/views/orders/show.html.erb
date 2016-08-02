@@ -1,4 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>
+<%= bootstrap_form_for(@order, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10') do |f| %>
+    <% @order_fields.each do |field| %>
+        <%= f.static_control field %>
+    <% end %>
+    <%= link_to 'Edit', edit_order_path(@order), class: 'btn btn-default' %> |
+    <%= link_to 'Back', orders_path, class: 'btn btn-primary' %>
+<% end %>
+
+
+

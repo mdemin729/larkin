@@ -113,7 +113,6 @@ class CsvImportsController < ApplicationController
       params[:csv_import] = @csv_import
       raw_order = RawOrder.new(params)
       raw_order.save :validate => false
-      #@csv_import.raw_orders.add_to_target(raw_order)
     end
   end
 

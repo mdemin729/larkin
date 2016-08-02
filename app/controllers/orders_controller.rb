@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+    @order_fields = Order.column_names - %w(id created_at updated_at)
   end
 
   # GET /orders/new
