@@ -50,7 +50,7 @@
             </td>
         <% elsif !raw_order.order.nil? %>
             <td class="success">
-              <%= link_to raw_order.row_num, order_path(raw_order.order) %> | <%= raw_order.order_id %>
+              <%= link_to raw_order.row_num, order_path(raw_order.order) %>
             </td>
         <% else %>
             <td>

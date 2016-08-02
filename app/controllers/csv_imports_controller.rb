@@ -18,6 +18,9 @@ class CsvImportsController < ApplicationController
       v2 = row2.valid? ? 1 : 0
       res = v1 <=> v2
       if res == 0
+        res = (row1.order.nil? ? 0 : 1) <=> (row2.order.nil? ? 0 : 1)
+      end
+      if res == 0
         res = row1.row_num <=> row2.row_num
       end
       res
