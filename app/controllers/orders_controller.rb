@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order_fields, except: [:create, :update, :destroy]
 
   # GET /orders
   # GET /orders.json
@@ -62,14 +63,17 @@ class OrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-      @order_fields = Order.column_names - %w(id created_at updated_at)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_order
+    @order = Order.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def order_params
-      params.require(:order).permit(:delivery_date, :delivery_shift, :origin_name, :origin_raw_line_1, :origin_city, :origin_state, :origin_zip, :client, :name, :destination_raw_line_1, :destination_city, :destination_state, :destination_zip, :phone_number, :phone_ext, :mode, :purchase_order_number, :volume, :handling_unit_quantity, :handling_unit_type)
-    end
+  def set_order_fields
+    @order_fields = Order.column_names - %w(id phone_ext raw_order_id created_at updated_at)
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def order_params
+    params.require(:order).permit(:delivery_date, :delivery_shift, :origin_name, :origin_raw_line_1, :origin_city, :origin_state, :origin_zip, :client, :name, :destination_raw_line_1, :destination_city, :destination_state, :destination_zip, :phone_number, :phone_ext, :mode, :purchase_order_number, :volume, :handling_unit_quantity, :handling_unit_type)
+  end
 end
