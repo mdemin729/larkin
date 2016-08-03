@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @truck.model %>
+</p>
+
+<p>
+  <strong>Max weight:</strong>
+  <%= @truck.max_weight %>
+</p>
+
+<p>
+  <strong>Max volume:</strong>
+  <%= @truck.max_volume %>
+</p>
+
+<p>
+  <strong>Driver:</strong>
+  <%= @truck.driver %>
+</p>
+
+<%= link_to 'Edit', edit_truck_path(@truck) %> |
+<%= link_to 'Back', trucks_path %>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  model: MyString
+  max_weight: 1
+  max_volume: 1
+  driver_id: 
+
+two:
+  model: MyString
+  max_weight: 1
+  max_volume: 1
+  driver_id: 
