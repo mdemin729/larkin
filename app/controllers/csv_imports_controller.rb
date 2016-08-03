@@ -125,9 +125,16 @@ class CsvImportsController < ApplicationController
     order_params = ro.attributes.to_hash
     order_params.delete_if { |key, value| %w(id row_num created_at updated_at order_id csv_import_id).include? key }
     order_params[:raw_order_id] = ro.id
+    order_params[:delivery_date] = Date.strptime ro.delivery_date, '%m/%d/%Y'
 
     order = Order.new(order_params)
-    order.save
+    if order.valid?
+      order.save
+    else
+      order.errors.full_messages.each do |msg|
+        puts msg
+      end
+    end
 
     order
   end
