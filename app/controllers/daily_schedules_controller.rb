@@ -28,6 +28,7 @@ class DailySchedulesController < ApplicationController
 
     respond_to do |format|
       if @daily_schedule.save
+        create_empty_loads
         format.html { redirect_to @daily_schedule, notice: 'Daily schedule was successfully created.' }
         format.json { render :show, status: :created, location: @daily_schedule }
       else
@@ -35,6 +36,20 @@ class DailySchedulesController < ApplicationController
         format.json { render json: @daily_schedule.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def create_empty_loads
+    drivers = determine_drivers
+    Load.create([{:daily_schedule => @daily_schedule, :delivery_shift => 'M', :driver => drivers[0]},
+                 {:daily_schedule => @daily_schedule, :delivery_shift => 'N', :driver => drivers[1]},
+                 {:daily_schedule => @daily_schedule, :delivery_shift => 'E', :driver => drivers[0]}])
+  end
+
+  def determine_drivers
+    drivers = Driver.first(2)
+    diff = @daily_schedule.delivery_date - Date.new(2000)
+    drivers.reverse! if diff % 2 == 1
+    drivers
   end
 
   # PATCH/PUT /daily_schedules/1
@@ -62,13 +77,13 @@ class DailySchedulesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_daily_schedule
-      @daily_schedule = DailySchedule.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_daily_schedule
+    @daily_schedule = DailySchedule.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def daily_schedule_params
-      params.require(:daily_schedule).permit(:delivery_date)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def daily_schedule_params
+    params.require(:daily_schedule).permit(:delivery_date)
+  end
 end
