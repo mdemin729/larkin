@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :drivers
   resources :orders
   resources :csv_imports do
     member do
