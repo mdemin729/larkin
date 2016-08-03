@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160801182215) do
+ActiveRecord::Schema.define(version: 20160803165117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,12 @@ ActiveRecord::Schema.define(version: 20160801182215) do
     t.string   "csv",        limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "drivers", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "orders", force: :cascade do |t|
@@ -117,10 +123,22 @@ ActiveRecord::Schema.define(version: 20160801182215) do
     t.text    "handling_unit_type"
   end
 
+  create_table "trucks", force: :cascade do |t|
+    t.string   "model"
+    t.integer  "max_weight"
+    t.integer  "max_volume"
+    t.integer  "driver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "trucks", ["driver_id"], name: "index_trucks_on_driver_id", using: :btree
+
   create_table "ttt", id: :bigserial, force: :cascade do |t|
     t.string "name", limit: 256, array: true
   end
 
   add_foreign_key "orders", "raw_orders"
   add_foreign_key "raw_orders", "csv_imports"
+  add_foreign_key "trucks", "drivers"
 end
