@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Delivery date:</strong>
+  <%= @daily_schedule.delivery_date %>
+</p>
+
+<%= link_to 'Edit', edit_daily_schedule_path(@daily_schedule) %> |
+<%= link_to 'Back', daily_schedules_path %>

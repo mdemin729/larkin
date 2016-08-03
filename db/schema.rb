@@ -29,9 +29,15 @@ ActiveRecord::Schema.define(version: 20160803174914) do
   end
 
   create_table "csv_imports", force: :cascade do |t|
-    t.string   "csv",        limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "csv"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "daily_schedules", force: :cascade do |t|
+    t.date     "delivery_date"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "drivers", force: :cascade do |t|
@@ -41,13 +47,14 @@ ActiveRecord::Schema.define(version: 20160803174914) do
   end
 
   create_table "loads", force: :cascade do |t|
-    t.date     "delivery_date"
+    t.integer  "daily_schedule_id"
     t.string   "delivery_shift"
     t.integer  "driver_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
+  add_index "loads", ["daily_schedule_id"], name: "index_loads_on_daily_schedule_id", using: :btree
   add_index "loads", ["driver_id"], name: "index_loads_on_driver_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
@@ -110,29 +117,6 @@ ActiveRecord::Schema.define(version: 20160803174914) do
   add_index "raw_orders", ["csv_import_id"], name: "index_raw_orders_on_csv_import_id", using: :btree
   add_index "raw_orders", ["order_id"], name: "index_raw_orders_on_order_id", using: :btree
 
-  create_table "test_data", force: :cascade do |t|
-    t.text    "delivery_date"
-    t.text    "delivery_shift"
-    t.text    "origin_name"
-    t.text    "origin_raw_line_1"
-    t.text    "origin_city"
-    t.text    "origin_state"
-    t.text    "origin_zip"
-    t.text    "origin_country"
-    t.text    "client_name"
-    t.text    "destination_raw_line_1"
-    t.text    "destination_city"
-    t.text    "destination_state"
-    t.text    "destination_zip"
-    t.text    "destination_country"
-    t.text    "phone_number"
-    t.text    "mode"
-    t.text    "purchase_order_number"
-    t.decimal "volume",                 precision: 7, scale: 2
-    t.integer "handling_unit_quantity"
-    t.text    "handling_unit_type"
-  end
-
   create_table "trucks", force: :cascade do |t|
     t.string   "model"
     t.integer  "max_weight"
@@ -144,10 +128,7 @@ ActiveRecord::Schema.define(version: 20160803174914) do
 
   add_index "trucks", ["driver_id"], name: "index_trucks_on_driver_id", using: :btree
 
-  create_table "ttt", id: :bigserial, force: :cascade do |t|
-    t.string "name", limit: 256, array: true
-  end
-
+  add_foreign_key "loads", "daily_schedules"
   add_foreign_key "loads", "drivers"
   add_foreign_key "orders", "raw_orders"
   add_foreign_key "raw_orders", "csv_imports"

@@ -2,7 +2,7 @@
 
 <h1>Listing Loads</h1>
 
-<%= link_to 'New Daily Schedule', daily_schedule_new_path, class: 'btn btn-default' %>
+<%= link_to 'New Daily Schedule', new_daily_schedule_path, class: 'btn btn-default' %>
 <br><br>
 
 <table class="table table-hover">
@@ -11,19 +11,17 @@
     <th>Delivery date</th>
     <th>Delivery shift</th>
     <th>Driver</th>
-    <th colspan="3"></th>
+    <th colspan="1"></th>
   </tr>
   </thead>
 
   <tbody>
   <% @loads.each do |load| %>
       <tr>
-        <td><%= load.delivery_date %></td>
+        <td><%= load.daily_schedule.delivery_date %></td>
         <td><%= load.delivery_shift %></td>
-        <td><%= load.driver %></td>
+        <td><%= link_to load.driver.name, driver_path(load.driver) %></td>
         <td><%= link_to 'Show', load %></td>
-        <td><%= link_to 'Edit', edit_load_path(load) %></td>
-        <td><%= link_to 'Destroy', load, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
   <% end %>
   </tbody>
