@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160803165117) do
+ActiveRecord::Schema.define(version: 20160803174914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,16 @@ ActiveRecord::Schema.define(version: 20160803165117) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "loads", force: :cascade do |t|
+    t.date     "delivery_date"
+    t.string   "delivery_shift"
+    t.integer  "driver_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "loads", ["driver_id"], name: "index_loads_on_driver_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.date     "delivery_date"
@@ -138,6 +148,7 @@ ActiveRecord::Schema.define(version: 20160803165117) do
     t.string "name", limit: 256, array: true
   end
 
+  add_foreign_key "loads", "drivers"
   add_foreign_key "orders", "raw_orders"
   add_foreign_key "raw_orders", "csv_imports"
   add_foreign_key "trucks", "drivers"
