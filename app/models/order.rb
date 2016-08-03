@@ -1,5 +1,6 @@
 class Order < ActiveRecord::Base
   belongs_to :raw_order
+  belongs_to :load
 
   validates_presence_of :delivery_date
   validates :delivery_shift, inclusion: {in: %w(M N E)}, allow_blank: true

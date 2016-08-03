@@ -4,7 +4,7 @@ class DailySchedulesController < ApplicationController
   # GET /daily_schedules
   # GET /daily_schedules.json
   def index
-    @daily_schedules = DailySchedule.all
+    @daily_schedules = DailySchedule.order(:delivery_date).all
   end
 
   # GET /daily_schedules/1
@@ -29,7 +29,7 @@ class DailySchedulesController < ApplicationController
     respond_to do |format|
       if @daily_schedule.save
         create_empty_loads
-        format.html { redirect_to @daily_schedule, notice: 'Daily schedule was successfully created.' }
+        format.html { redirect_to daily_schedules_path, notice: 'Daily schedule was successfully created.' }
         format.json { render :show, status: :created, location: @daily_schedule }
       else
         format.html { render :new }
