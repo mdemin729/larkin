@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :loads
   resources :trucks
   resources :drivers
   resources :orders
