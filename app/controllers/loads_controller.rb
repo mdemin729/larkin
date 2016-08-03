@@ -1,5 +1,5 @@
 class LoadsController < ApplicationController
-  before_action :set_load, only: [:show, :edit, :update, :destroy]
+  before_action :set_load, only: [:show, :edit, :update, :destroy, :add_order, :remove_order]
 
   # GET /loads
   # GET /loads.json
@@ -21,6 +21,8 @@ class LoadsController < ApplicationController
   def edit
     @order_fields = Order.column_names - %w(id phone_ext raw_order_id created_at updated_at)
     @pending_orders = Order.where(:load => nil).all
+    @total_volume = @load.orders.all.to_a.sum(&:volume)
+    @is_vloume_exceeded = @total_volume > @load.driver.truck.max_volume
   end
 
   # POST /loads
@@ -63,14 +65,32 @@ class LoadsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_load
-      @load = Load.find(params[:id])
-    end
+  def add_order
+    load_order_params
+    order = Order.find(params[:order_id])
+    order.update(:load => @load)
+    redirect_to edit_load_path(@load)
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def load_params
-      params.require(:load).permit(:delivery_date, :delivery_shift, :driver_id)
-    end
+  def remove_order
+    load_order_params
+    order = Order.find(params[:order_id])
+    order.update(:load => nil)
+    redirect_to edit_load_path(@load)
+  end
+
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_load
+    @load = Load.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def load_params
+    params.require(:load).permit(:delivery_date, :delivery_shift, :driver_id)
+  end
+
+  def load_order_params
+    params.permit(:id, :order_id)
+  end
 end

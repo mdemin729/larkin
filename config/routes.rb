@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   resources :daily_schedules
-  resources :loads
+  resources :loads do
+    member do
+      post 'orders/:order_id', to: :add_order
+      delete 'orders/:order_id', to: :remove_order
+    end
+  end
   resources :trucks
   resources :drivers
   resources :orders
@@ -8,7 +13,6 @@ Rails.application.routes.draw do
     member do
       post 'run'
     end
-
     resources :raw_orders
   end
   resources :raw_orders
