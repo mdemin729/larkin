@@ -20,7 +20,7 @@ class LoadsController < ApplicationController
   # GET /loads/1/edit
   def edit
     @order_fields = Order.column_names - %w(id phone_ext raw_order_id created_at updated_at)
-    @pending_orders = Order.where(:load => nil).all
+    @pending_orders = Order.order(:delivery_date).where(:load => nil).all
     @total_volume = @load.orders.all.to_a.sum(&:volume)
     @is_vloume_exceeded = @total_volume > @load.driver.truck.max_volume
   end

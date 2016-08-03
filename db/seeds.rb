@@ -10,7 +10,7 @@ driver1 = Driver.create(:name => 'John Smith')
 driver2 = Driver.create(:name => 'Bill Jackson')
 
 Truck.create(:model => 'Mercedes Benz', :max_weight => 10000, :max_volume => 1400, :driver => driver1)
-Truck.create(:model => 'Mercedes Benz', :max_weight => 10000, :max_volume => 1400, :driver => driver2)
+Truck.create(:model => 'MAN', :max_weight => 10000, :max_volume => 1400, :driver => driver2)
 
 ds1 = DailySchedule.create(:delivery_date => '2016-08-02')
 Load.create(:daily_schedule => ds1, :delivery_shift => 'M', :driver => driver2)

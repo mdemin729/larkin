@@ -6,7 +6,9 @@
 <%= link_to 'Back', loads_path %>
 
 <h2>Added orders</h2>
-<p>Total volume: <span class="<%= 'text-danger' if @is_vloume_exceeded %>"><%= @total_volume %></span></p>
+<p>Total volume: <span class="<%= 'text-danger' if @is_vloume_exceeded %>"><%= @total_volume %></span>
+  / <%= @load.driver.truck.max_volume %>
+</p>
 <table class="table table-hover table-condensed">
   <thead>
   <tr>

@@ -3,5 +3,11 @@
         <%= @load.daily_schedule.delivery_date %>
     <% end %>
     <%= f.static_control :delivery_shift %>
+    <%= f.static_control label: 'Driver' do %>
+        <%= @load.driver.name %>
+    <% end %>
+    <%= f.static_control label: 'Truck' do %>
+        <%= @load.driver.truck.model %>
+    <% end %>
 <% end %>
 
