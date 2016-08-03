@@ -19,6 +19,8 @@ class LoadsController < ApplicationController
 
   # GET /loads/1/edit
   def edit
+    @order_fields = Order.column_names - %w(id phone_ext raw_order_id created_at updated_at)
+    @pending_orders = Order.where(:load => nil).all
   end
 
   # POST /loads

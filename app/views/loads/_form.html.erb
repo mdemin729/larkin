@@ -1,18 +1,7 @@
 <%= bootstrap_form_for(@load, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10') do |f| %>
-    <% if @load.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@load.errors.count, "error") %> prohibited this load from being saved:</h2>
-
-          <ul>
-            <% @load.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
+    <%= f.static_control label: 'Delivery date' do %>
+        <%= @load.daily_schedule.delivery_date %>
     <% end %>
-
-    <%= f.date_field :delivery_date %>
-    <%= f.text_field :delivery_shift %>
-    <%= f.submit %>
+    <%= f.static_control :delivery_shift %>
 <% end %>
 

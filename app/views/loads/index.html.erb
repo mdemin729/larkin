@@ -21,7 +21,7 @@
         <td><%= load.daily_schedule.delivery_date %></td>
         <td><%= load.delivery_shift %></td>
         <td><%= link_to load.driver.name, driver_path(load.driver) %></td>
-        <td><%= link_to 'Show', load %></td>
+        <td><%= link_to 'Edit', edit_load_path(load) %></td>
       </tr>
   <% end %>
   </tbody>
