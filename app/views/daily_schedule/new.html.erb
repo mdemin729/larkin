@@ -1,2 +1,18 @@
-<h1>DailySchedule#new</h1>
-<p>Find me in app/views/daily_schedule/new.html.erb</p>
+<h1>New Daily Schedule</h1>
+
+<%= bootstrap_form_for(@daily_schedule, layout: :horizontal, label_col: 'col-sm-2', control_col: 'col-sm-10') do |f| %>
+    <% if @daily_schedule.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@load.errors.count, "error") %> prohibited this load from being saved:</h2>
+
+          <ul>
+            <% @daily_schedule.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <%= f.date_field :delivery_date %>
+    <%= f.submit %>
+<% end %>
