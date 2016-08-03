@@ -11,3 +11,10 @@ driver2 = Driver.create(:name => 'Bill Jackson')
 
 Truck.create(:model => 'Mercedes Benz', :max_weight => 10000, :max_volume => 1400, :driver => driver1)
 Truck.create(:model => 'Mercedes Benz', :max_weight => 10000, :max_volume => 1400, :driver => driver2)
+
+Load.create(:delivery_date => '2016-08-02', :delivery_shift => 'M', :driver => driver2)
+Load.create(:delivery_date => '2016-08-02', :delivery_shift => 'N', :driver => driver1)
+Load.create(:delivery_date => '2016-08-02', :delivery_shift => 'E', :driver => driver2)
+Load.create(:delivery_date => '2016-08-03', :delivery_shift => 'M', :driver => driver1)
+Load.create(:delivery_date => '2016-08-03', :delivery_shift => 'N', :driver => driver2)
+Load.create(:delivery_date => '2016-08-03', :delivery_shift => 'E', :driver => driver1)
