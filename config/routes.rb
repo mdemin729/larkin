@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'daily_schedule/index'
+  get 'daily_schedule/new'
+  post 'daily_schedule/create'
+
   resources :loads
   resources :trucks
   resources :drivers
